@@ -47,8 +47,45 @@ end
 -- total sales ( total revenue generated ) 
 select sum(Sales) as Total_Sales
 from blinkit_sales
+
 -- to show this sales in million upto 2 decimal 
 select cast(sum(Sales)/1000000 as decimal(10,2)) as Total_sales
 from blinkit_sales 
 
 
+-- average sales
+select cast(avg(Sales) as decimal(10,0)) as Avg_Sales from blinkit_sales
+
+-- number of items
+select count(*) from blinkit_sales
+
+
+-- find the total sales for low fat 
+select sum(Sales) as Total_Sales from blinkit_sales
+where Item_Fat_Content = 'Low Fat'
+
+
+-- average ratings 
+select * from blinkit_sales
+select cast(avg(Rating) as decimal(10,2)) as agv_rating from blinkit_sales
+
+
+-- total sale ,avg_sales, ag_rating by fat contents 
+select Item_Fat_Content , cast(sum(Sales) as decimal(10,2)) as Total_sales ,
+cast(avg(Sales) as decimal(10,2)) as AVg_sales,
+count(*) as No_Of_Items,
+cast(avg(Rating) as decimal(10,2)) as avg_rating
+from blinkit_sales
+group by Item_Fat_Content
+order by Total_sales desc
+
+
+-- total sale ,avg_sales, ag_rating by fat contents of estabilisment year 2020
+select Item_Fat_Content , cast(sum(Sales) as decimal(10,2)) as Total_sales ,
+cast(avg(Sales) as decimal(10,2)) as AVg_sales,
+count(*) as No_Of_Items,
+cast(avg(Rating) as decimal(10,2)) as avg_rating
+from blinkit_sales
+where Outlet_Establishment_Year = 2020
+group by Item_Fat_Content
+order by Total_sales desc
